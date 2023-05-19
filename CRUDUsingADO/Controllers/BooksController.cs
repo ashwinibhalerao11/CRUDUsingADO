@@ -4,97 +4,98 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CRUDUsingADO.Controllers
 {
-    public class StudentController : Controller
+    public class BooksController : Controller
     {
         private readonly IConfiguration _configuration;
-        private StudentCRUD db;
-        public StudentController(IConfiguration configuration)
+        private BooksCRUD db;
+        public BooksController(IConfiguration configuration)
         {
             _configuration = configuration;
-            db = new StudentCRUD(_configuration);
+            db = new BooksCRUD(_configuration);
         }
 
-        // GET: StudentController
+        // GET: BooksController
         public ActionResult Index()
         {
-            var list = db.GetStudent();
+
+            var list = db.GetBooks();
             return View(list);
         }
 
-        // GET: StudentController/Details/5
-        public ActionResult Details(int rollno)
+        // GET: BooksController/Details/5
+        public ActionResult Details(int id)
         {
-            var stud = db.GetStudentByRollNo(rollno);
-            return View(stud);
+            var bk=db.GetBookById(id);
+            return View(bk);
         }
 
-        // GET: StudentController/Create
+        // GET: BooksController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: StudentController/Create
+        // POST: BooksController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Student student)
+        public ActionResult Create(Books book)
         {
             try
             {
-                int result = db.AddStudent(student);
+                int result = db.AddBook(book);
                 if (result > 0)
                     return RedirectToAction(nameof(Index));
                 else
                     return View();
             }
-            catch(Exception ex)
+            catch
             {
                 return View();
             }
         }
 
-        // GET: StudentController/Edit/5
-        public ActionResult Edit(int rollno)
+        // GET: BooksController/Edit/5
+        public ActionResult Edit(int id)
         {
-            var stud = db.GetStudentByRollNo(rollno);
-            return View(stud);
+            var bk = db.GetBookById(id);
+            return View(bk);
         }
 
-        // POST: StudentController/Edit/5
+        // POST: BooksController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Student student)
+        public ActionResult Edit(Books book)
         {
             try
             {
-                int result=db.EditStudent(student);
+              int result=db.EditBook(book);
                 if (result > 0)
                     return RedirectToAction(nameof(Index));
                 else
                     return View();
             }
-            catch(Exception ex)
+            catch
             {
                 return View();
             }
         }
 
-        // GET: StudentController/Delete/5
-        public ActionResult Delete(int rollno)
+        // GET: BooksController/Delete/5
+        public ActionResult Delete(int id)
         {
-            var stud = db.GetStudentByRollNo(rollno);
-            return View(stud);
+            var bk = db.GetBookById(id);
+            return View(bk);
         }
 
-        // POST: StudentController/Delete/5
+        // POST: BooksController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
-        public ActionResult Deletefrom(int rollno)
+        public ActionResult Deletefrom(int id)
         {
             try
             {
-               int result=db.DeleteStudent(rollno);
+                int result=db.DeleteBook(id);
                 if (result > 0)
                     return RedirectToAction(nameof(Index));
                 else

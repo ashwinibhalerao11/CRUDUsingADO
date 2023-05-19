@@ -88,6 +88,7 @@ namespace CRUDUsingADO.Models
             cmd.Parameters.AddWithValue("@branch", student.Branch);
             cmd.Parameters.AddWithValue("@email", student.Email);
             cmd.Parameters.AddWithValue("@percentage", student.Percentage);
+            cmd.Parameters.AddWithValue("@rollno", student.RollNo);
             con.Open();
             result = cmd.ExecuteNonQuery();
             con.Close();
